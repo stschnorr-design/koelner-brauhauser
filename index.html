@@ -13,8 +13,8 @@
             --tag-bg: #ffebee;
             --tag-text: #c62828;
             --btn-map: #1976d2;
+            --btn-web: #2e7d32;
         }
-
         body {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
             background-color: var(--bg-color);
@@ -22,137 +22,99 @@
             margin: 0;
             padding: 0;
         }
-
         header {
             background-color: var(--primary-color);
             color: white;
-            padding: 1.5rem;
+            padding: 1.5rem 1rem;
             text-align: center;
             box-shadow: 0 2px 4px rgba(0,0,0,0.1);
         }
-
         header h1 {
             margin: 0;
-            font-size: 1.5rem;
+            font-size: 1.6rem;
         }
-
         header p {
-            margin: 0.5rem 0 0;
-            font-size: 0.9rem;
+            margin: 0.5rem 0 0 0;
             opacity: 0.9;
+            font-size: 0.95rem;
         }
-
-        .container {
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 1rem;
-        }
-
-        /* Filter Buttons */
         .filter-container {
             display: flex;
-            flex-wrap: wrap;
-            gap: 0.5rem;
-            margin-bottom: 1.5rem;
-            justify-content: center;
+            overflow-x: auto;
+            padding: 1rem;
+            gap: 8px;
+            background: white;
+            border-bottom: 1px solid #e0e0e0;
         }
-
         .filter-btn {
-            background-color: white;
-            border: 1px solid #ccc;
-            padding: 0.5rem 1rem;
+            background: #e0e0e0;
+            border: none;
+            padding: 8px 16px;
             border-radius: 20px;
+            white-space: nowrap;
+            font-weight: bold;
             cursor: pointer;
-            font-size: 0.9rem;
-            transition: all 0.2s;
+            color: #555;
         }
-
-        .filter-btn.active, .filter-btn:hover {
-            background-color: var(--primary-color);
+        .filter-btn.active {
+            background: var(--primary-color);
             color: white;
-            border-color: var(--primary-color);
         }
-
-        /* Cards Layout */
-        .brauhaus-list {
-            display: grid;
-            gap: 1rem;
+        main {
+            padding: 1rem;
+            max-width: 800px;
+            margin: 0 auto;
         }
-
         .card {
-            background-color: var(--card-bg);
-            border-radius: 8px;
-            padding: 1rem 1.25rem;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.06);
             border-left: 5px solid var(--primary-color);
         }
-
         .card-header {
             display: flex;
             justify-content: space-between;
             align-items: flex-start;
+            margin-bottom: 0.5rem;
         }
-
-        .card h3 {
-            margin: 0 0 0.25rem 0;
-            font-size: 1.15rem;
+        .card-header h3 {
+            margin: 0;
+            font-size: 1.2rem;
         }
-
-        .badge {
+        .tag {
             background-color: var(--tag-bg);
             color: var(--tag-text);
-            padding: 0.2rem 0.5rem;
-            border-radius: 4px;
+            padding: 4px 8px;
+            border-radius: 6px;
             font-size: 0.75rem;
             font-weight: bold;
             text-transform: uppercase;
         }
-
-        .address-row {
+        .card p {
+            margin: 0.3rem 0;
+            font-size: 0.95rem;
+            line-height: 1.4;
+        }
+        .btn-group {
             display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 0.5rem;
+            gap: 10px;
+            margin-top: 12px;
         }
-
-        .address {
-            font-size: 0.9rem;
-            color: #666;
-        }
-
-        .map-btn {
-            background-color: var(--btn-map);
-            color: white;
-            border: none;
-            padding: 0.3rem 0.6rem;
-            border-radius: 4px;
-            font-size: 0.8rem;
-            cursor: pointer;
-            text-decoration: none;
+        .btn-action {
             display: inline-flex;
             align-items: center;
-            gap: 0.3rem;
-        }
-
-        .map-btn:hover {
-            opacity: 0.9;
-        }
-
-        .details {
-            font-size: 0.9rem;
-            margin-top: 0.5rem;
-            border-top: 1px solid #eee;
-            padding-top: 0.5rem;
-        }
-
-        .details span {
+            gap: 5px;
+            padding: 8px 14px;
+            border-radius: 6px;
+            text-decoration: none;
             font-weight: bold;
+            font-size: 0.85rem;
+            color: white;
         }
-        
-        .opening-hours {
-            color: #d32f2f;
-            font-weight: 500;
-        }
+        .btn-map { background-color: var(--btn-map); }
+        .btn-web { background-color: var(--btn-web); }
     </style>
 </head>
 <body>
@@ -162,98 +124,222 @@
         <p>Deine App für Kölsch, Veedel & Brauhauskultur</p>
     </header>
 
-    <div class="container">
-        <!-- Filter nach Veedel -->
-        <div class="filter-container" id="filterContainer">
-            <button class="filter-btn active" data-veedel="alle">Alle</button>
-            <button class="filter-btn" data-veedel="Ehrenfeld">Ehrenfeld</button>
-            <button class="filter-btn" data-veedel="Nippes">Nippes & Agnesviertel</button>
-            <button class="filter-btn" data-veedel="Severinsviertel">Severinsviertel</button>
-            <button class="filter-btn" data-veedel="Innenstadt">Innenstadt</button>
-            <button class="filter-btn" data-veedel="Eigelstein">Eigelstein</button>
-            <button class="filter-btn" data-veedel="Deutz">Deutz</button>
-        </div>
-
-        <!-- Liste der Brauhäuser -->
-        <div class="brauhaus-list" id="brauhausList">
-            <!-- Einträge werden per JavaScript dynamisch geladen -->
-        </div>
+    <div class="filter-container">
+        <button class="filter-btn active" onclick="filterVeedel('alle', this)">Alle</button>
+        <button class="filter-btn" onclick="filterVeedel('Ehrenfeld', this)">Ehrenfeld</button>
+        <button class="filter-btn" onclick="filterVeedel('Nippes', this)">Nippes & Agnesviertel</button>
+        <button class="filter-btn" onclick="filterVeedel('Severinsviertel', this)">Severinsviertel</button>
+        <button class="filter-btn" onclick="filterVeedel('Innenstadt', this)">Innenstadt & Altstadt</button>
+        <button class="filter-btn" onclick="filterVeedel('Eigelstein', this)">Eigelstein</button>
+        <button class="filter-btn" onclick="filterVeedel('Deutz', this)">Deutz</button>
     </div>
 
+    <main id="brauhaus-list">
+
+        <!-- Ehrenfeld -->
+        <div class="card" data-veedel="Ehrenfeld">
+            <div class="card-header">
+                <h3>Haus Scholzen</h3>
+                <span class="tag">Ehrenfeld</span>
+            </div>
+            <p>📍 Venloer Str. 236, Köln</p>
+            <p><strong>Kölsch:</strong> Gaffel & Bitburger</p>
+            <p><strong>Öffnungszeiten:</strong> Mi–So 11:30–15:00 & 17:00–23:00 Uhr (Ruhetag: Mo & Di)</p>
+            <p><strong>Besonderheit:</strong> Gehobene Gastronomie, sehr gutbürgerlich & traditionsreich.</p>
+            <div class="btn-group">
+                <a href="https://maps.google.com/?q=Haus+Scholzen+Koeln" target="_blank" class="btn-action btn-map">🗺️ Route</a>
+                <a href="https://www.haus-scholzen.de/" target="_blank" class="btn-action btn-web">🌐 Website</a>
+            </div>
+        </div>
+
+        <!-- Nippes -->
+        <div class="card" data-veedel="Nippes">
+            <div class="card-header">
+                <h3>Em Golde Kappes</h3>
+                <span class="tag">Nippes</span>
+            </div>
+            <p>📍 Neusser Str. 295, Köln</p>
+            <p><strong>Kölsch:</strong> Früh</p>
+            <p><strong>Öffnungszeiten:</strong> Mo–Do 11:30–22:30, Fr–Sa 11:30–24:00, So 12:00–22:00 Uhr</p>
+            <p><strong>Besonderheit:</strong> Klassisches Nippeser Brauhaus, montags Reibekuchentag.</p>
+            <div class="btn-group">
+                <a href="https://maps.google.com/?q=Em+Golde+Kappes+Koeln" target="_blank" class="btn-action btn-map">🗺️ Route</a>
+                <a href="https://www.em-golde-kappes.de/" target="_blank" class="btn-action btn-web">🌐 Website</a>
+            </div>
+        </div>
+
+        <div class="card" data-veedel="Nippes">
+            <div class="card-header">
+                <h3>Balthasar im Agnesviertel</h3>
+                <span class="tag">Nippes</span>
+            </div>
+            <p>📍 Balthasarstraße 2, Köln</p>
+            <p><strong>Kölsch:</strong> Gaffel</p>
+            <p><strong>Öffnungszeiten:</strong> Täglich ab 11:00 Uhr geöffnet</p>
+            <p><strong>Besonderheit:</strong> Gemütlicher Treffpunkt im Agnesviertel mit toller Atmosphäre.</p>
+            <div class="btn-group">
+                <a href="https://maps.google.com/?q=Balthasar+Agnesviertel+Koeln" target="_blank" class="btn-action btn-map">🗺️ Route</a>
+                <a href="https://balthasar-koeln.de/" target="_blank" class="btn-action btn-web">🌐 Website</a>
+            </div>
+        </div>
+
+        <!-- Innenstadt & Altstadt -->
+        <div class="card" data-veedel="Innenstadt">
+            <div class="card-header">
+                <h3>Klimperkasten</h3>
+                <span class="tag">Innenstadt</span>
+            </div>
+            <p>📍 Alter Markt 55, Köln</p>
+            <p><strong>Kölsch:</strong> Früh Kölsch</p>
+            <p><strong>Öffnungszeiten:</strong> Täglich ab 12:00 Uhr bis spät nachts</p>
+            <p><strong>Besonderheit:</strong> Urige Kneipe & Brauhauskultur direkt am Alter Markt mit nostalgischer Einrichtung.</p>
+            <div class="btn-group">
+                <a href="https://maps.google.com/?q=Klimperkasten+Alter+Markt+Koeln" target="_blank" class="btn-action btn-map">🗺️ Route</a>
+                <a href="https://www.klimperkasten-koeln.de/" target="_blank" class="btn-action btn-web">🌐 Website</a>
+            </div>
+        </div>
+
+        <div class="card" data-veedel="Innenstadt">
+            <div class="card-header">
+                <h3>Früh am Dom</h3>
+                <span class="tag">Innenstadt</span>
+            </div>
+            <p>📍 Am Hof 12-18, Köln</p>
+            <p><strong>Kölsch:</strong> Früh Kölsch</p>
+            <p><strong>Öffnungszeiten:</strong> Täglich 11:00–23:00 Uhr</p>
+            <p><strong>Besonderheit:</strong> Weltbekanntes Großbrauhaus direkt am Kölner Dom.</p>
+            <div class="btn-group">
+                <a href="https://maps.google.com/?q=Frueh+am+Dom+Koeln" target="_blank" class="btn-action btn-map">🗺️ Route</a>
+                <a href="https://www.frueh.de/" target="_blank" class="btn-action btn-web">🌐 Website</a>
+            </div>
+        </div>
+
+        <div class="card" data-veedel="Innenstadt">
+            <div class="card-header">
+                <h3>Brauhaus Sion</h3>
+                <span class="tag">Innenstadt</span>
+            </div>
+            <p>📍 Unter Taschenmacher 5-7, Köln</p>
+            <p><strong>Kölsch:</strong> Sion Kölsch</p>
+            <p><strong>Öffnungszeiten:</strong> Täglich 11:30–23:00 Uhr</p>
+            <p><strong>Besonderheit:</strong> Traditioreich in der Altstadt, seit Generationen für gute Küche bekannt.</p>
+            <div class="btn-group">
+                <a href="https://maps.google.com/?q=Brauhaus+Sion+Koeln" target="_blank" class="btn-action btn-map">🗺️ Route</a>
+                <a href="https://www.brauhaus-sion.de/" target="_blank" class="btn-action btn-web">🌐 Website</a>
+            </div>
+        </div>
+
+        <div class="card" data-veedel="Innenstadt">
+            <div class="card-header">
+                <h3>Päffgen Brauhaus</h3>
+                <span class="tag">Innenstadt</span>
+            </div>
+            <p>📍 Friesenstraße 64-66, Köln</p>
+            <p><strong>Kölsch:</strong> Päffgen Kölsch (hausgebraut)</p>
+            <p><strong>Öffnungszeiten:</strong> Di–So 12:00–24:00 Uhr (Ruhetag: Mo)</p>
+            <p><strong>Besonderheit:</strong> Legendäre Hausbrauerei mit wunderschönem Biergarten im Innenhof.</p>
+            <div class="btn-group">
+                <a href="https://maps.google.com/?q=Paeffgen+Friesenstrasse+Koeln" target="_blank" class="btn-action btn-map">🗺️ Route</a>
+                <a href="https://www.paeffgen-koelsch.de/" target="_blank" class="btn-action btn-web">🌐 Website</a>
+            </div>
+        </div>
+
+        <div class="card" data-veedel="Innenstadt">
+            <div class="card-header">
+                <h3>Brauerei zur Malzmühle</h3>
+                <span class="tag">Innenstadt</span>
+            </div>
+            <p>📍 Heumarkt 6, Köln</p>
+            <p><strong>Kölsch:</strong> Mühlen Kölsch</p>
+            <p><strong>Öffnungszeiten:</strong> Täglich 11:30–23:00 Uhr</p>
+            <p><strong>Besonderheit:</strong> Berühmt für das Mühlen Kölsch, das sogar Bill Clinton serviert wurde.</p>
+            <div class="btn-group">
+                <a href="https://maps.google.com/?q=Brauerei+zur+Malzmuehle+Koeln" target="_blank" class="btn-action btn-map">🗺️ Route</a>
+                <a href="https://www.brauereizurmalzmuehle.de/" target="_blank" class="btn-action btn-web">🌐 Website</a>
+            </div>
+        </div>
+
+        <div class="card" data-veedel="Innenstadt">
+            <div class="card-header">
+                <h3>Peters Brauhaus</h3>
+                <span class="tag">Innenstadt</span>
+            </div>
+            <p>📍 Mühlengasse 1, Köln</p>
+            <p><strong>Kölsch:</strong> Peters Kölsch</p>
+            <p><strong>Öffnungszeiten:</strong> Täglich 11:30–23:00 Uhr</p>
+            <p><strong>Besonderheit:</strong> Wunderschöne Buntglasdecken und hervorragende Brauhausküche in der Altstadt.</p>
+            <div class="btn-group">
+                <a href="https://maps.google.com/?q=Peters+Brauhaus+Koeln" target="_blank" class="btn-action btn-map">🗺️ Route</a>
+                <a href="https://peters-brauhaus.de/" target="_blank" class="btn-action btn-web">🌐 Website</a>
+            </div>
+        </div>
+
+        <!-- Severinsviertel -->
+        <div class="card" data-veedel="Severinsviertel">
+            <div class="card-header">
+                <h3>Früh em Veedel</h3>
+                <span class="tag">Severinsviertel</span>
+            </div>
+            <p>📍 Chlodwigplatz 28, Köln</p>
+            <p><strong>Kölsch:</strong> Früh Kölsch</p>
+            <p><strong>Öffnungszeiten:</strong> Täglich ab 11:00 Uhr</p>
+            <p><strong>Besonderheit:</strong> Uriges Kölner Südstadt-Brauhaus direkt am Chlodwigplatz.</p>
+            <div class="btn-group">
+                <a href="https://maps.google.com/?q=Frueh+em+Veedel+Koeln" target="_blank" class="btn-action btn-map">🗺️ Route</a>
+                <a href="https://www.frueh.de/" target="_blank" class="btn-action btn-web">🌐 Website</a>
+            </div>
+        </div>
+
+        <!-- Eigelstein -->
+        <div class="card" data-veedel="Eigelstein">
+            <div class="card-header">
+                <h3>Brauhaus em Köbes</h3>
+                <span class="tag">Eigelstein</span>
+            </div>
+            <p>📍 Eigelstein 115, Köln</p>
+            <p><strong>Kölsch:</strong> Gaffel</p>
+            <p><strong>Öffnungszeiten:</strong> Täglich ab 16:00 Uhr</p>
+            <p><strong>Besonderheit:</strong> Authentisches Veedelsbrauhaus nahe der Eigelsteintorburg.</p>
+            <div class="btn-group">
+                <a href="https://maps.google.com/?q=Em+Koebes+Eigelstein+Koeln" target="_blank" class="btn-action btn-map">🗺️ Route</a>
+                <a href="https://www.gaffel.de/" target="_blank" class="btn-action btn-web">🌐 Website</a>
+            </div>
+        </div>
+
+        <!-- Deutz -->
+        <div class="card" data-veedel="Deutz">
+            <div class="card-header">
+                <h3>Lommerzheim</h3>
+                <span class="tag">Deutz</span>
+            </div>
+            <p>📍 Siegesstraße 18, Köln</p>
+            <p><strong>Kölsch:</strong> Päffgen Kölsch</p>
+            <p><strong>Öffnungszeiten:</strong> Mi–Mo 16:30–24:00 Uhr (Ruhetag: Di)</p>
+            <p><strong>Besonderheit:</strong> Weltkulturerbe der Kölner Kneipen, berühmte Koteletts!</p>
+            <div class="btn-group">
+                <a href="https://maps.google.com/?q=Lommerzheim+Koeln" target="_blank" class="btn-action btn-map">🗺️ Route</a>
+                <a href="https://www.lommerzheim.de/" target="_blank" class="btn-action btn-web">🌐 Website</a>
+            </div>
+        </div>
+
+    </main>
+
     <script>
-        // Erweitetzte Datenbasis mit Öffnungszeiten
-        const brauhaeusser = [
-            { name: "Haus Scholzen", veedel: "Ehrenfeld", adresse: "Venloer Str. 236, Köln", koelsch: "Gaffel & Bitburger", oeffnungszeiten: "Mi-So 11:30–15:00 & 17:00–23:00 Uhr (Ruhetag: Mo & Di)", info: "Gehobene Gastronomie, sehr gutbürgerlich." },
-            { name: "Em Golde Kappes", veedel: "Nippes", adresse: "Neusser Str. 295, Köln", koelsch: "Früh", oeffnungszeiten: "Mo-Do 11:30–22:30, Fr-Sa 11:30–24:00, So 12:00–22:00 Uhr (Kein Ruhetag)", info: "Klassisches Nippeser Brauhaus, montags Reibekuchentag." },
-            { name: "Balthasar im Agnesviertel", veedel: "Nippes", adresse: "Neusser Str. 40, Köln", koelsch: "Gaffel", oeffnungszeiten: "Täglich ab 11:00 Uhr geöffnet", info: "Gemütliches Veedelslokal." },
-            { name: "Brauhaus Stüsser", veedel: "Nippes", adresse: "Neusser Str. 47, Köln", koelsch: "Sion", oeffnungszeiten: "Mo-Fr ab 12:00, Sa ab 11:00, So ab 12:00 Uhr", info: "Beliebter Treffpunkt im Viertel." },
-            { name: "Früh 'Em Veedel'", veedel: "Severinsviertel", adresse: "Chlodwigplatz 28, Köln", koelsch: "Früh", oeffnungszeiten: "Täglich ab 11:30 Uhr geöffnet", info: "Direkt am Chlodwigplatz[span_1](start_span)[span_1](end_span)." },
-            { name: "Zum alten Brauhaus", veedel: "Severinsviertel", adresse: "Severinstr. 51, Köln", koelsch: "Reissdorf", oeffnungszeiten: "Täglich ab 11:00 Uhr geöffnet", info: "Urig mitten auf der Severinstraße." },
-            { name: "Brauhaus Reissdorf", veedel: "Innenstadt", adresse: "Kl. Griechenmarkt 40, Köln", koelsch: "Reissdorf", oeffnungszeiten: "Täglich ab 11:30 Uhr geöffnet", info: "Großes Brauhaus mit klassischer Küche." },
-            { name: "Im Leuchtturm", veedel: "Innenstadt", adresse: "Mauritiussteinweg 70, Köln", koelsch: "Reissdorf", oeffnungszeiten: "Täglich ab 16:00 Uhr geöffnet", info: "Gemütliche Kölsch-Kneipe." },
-            { name: "Thiebolds Eck", veedel: "Innenstadt", adresse: "Lungengasse 31, Köln", koelsch: "Reissdorf", oeffnungszeiten: "Täglich ab 15:00 Uhr geöffnet", info: "Traditionelle Adresse." },
-            { name: "Reissdorf am Hahnentor", veedel: "Innenstadt", adresse: "Hahnenstr. 24, Köln", koelsch: "Reissdorf", oeffnungszeiten: "Täglich ab 11:30 Uhr geöffnet", info: "Direkt am Ring / Hahnentor." },
-            { name: "Gasthaus zum Jan", veedel: "Innenstadt", adresse: "Thieboldsgasse 137, Köln", koelsch: "Gaffel", oeffnungszeiten: "Täglich ab 12:00 Uhr geöffnet", info: "Deftige Brauhauskost." },
-            { name: "Brauhaus Paffgen", veedel: "Innenstadt", adresse: "Friesenstr. 64-66, Köln", koelsch: "Paffgen", oeffnungszeiten: "Täglich ab 11:30 Uhr geöffnet", info: "Berühmt für süffiges Paffgen und Halve Hahn." },
-            { name: "Früh 'Em Jan v. Werth'", veedel: "Innenstadt", adresse: "Christophstr. 44, Köln", koelsch: "Früh", oeffnungszeiten: "Täglich ab 11:30 Uhr geöffnet", info: "Traditionsgaststätte." },
-            { name: "Em Hähnche", veedel: "Innenstadt", adresse: "Christophstr. 7A, Köln", koelsch: "Gaffel", oeffnungszeiten: "Täglich ab 16:00 Uhr geöffnet", info: "Gepflegte Gaffel-Kultur." },
-            { name: "Kleine Glocke", veedel: "Innenstadt", adresse: "Glockengasse 58, Köln", koelsch: "Gaffel", oeffnungszeiten: "Mo-Sa ab 15:00 Uhr (Ruhetag: Sonntag)", info: "Ganz in der Nähe des Doms/der Duftläden." },
-            { name: "Weinhaus Vogel", veedel: "Eigelstein", adresse: "Eigelstein 74, Köln", koelsch: "Gaffel", oeffnungszeiten: "Mo-Sa ab 17:00 Uhr (Ruhetag: Sonntag)", info: "Uriges Wein- und Kölschhaus." },
-            { name: "Kölsche Boor", veedel: "Eigelstein", adresse: "Eigelstein 121-123, Köln", koelsch: "Mühlen", oeffnungszeiten: "Täglich ab 11:30 Uhr geöffnet", info: "Eines der ältesten Wirtshäuser Kölns." },
-            { name: "Max Stark", veedel: "Eigelstein", adresse: "Unter Kahlenhausen 47, Köln", koelsch: "Paffgen", oeffnungszeiten: "Di-So ab 11:30 Uhr (Ruhetag: Montag)", info: "Herrlicher Blick aufs Rheinufer, tolle Atmosphäre." },
-            { name: "Soloreckenskammes", veedel: "Eigelstein", adresse: "Ursulagartenstr. 11, Köln", koelsch: "Schreckenskammer", oeffnungszeiten: "Di-So ab 15:00 Uhr (Ruhetag: Montag)", info: "Das charmante Schreckenskammer-Stübchen." },
-            { name: "Deutzer Brauhaus", veedel: "Deutz", adresse: "Ottoplatz, Köln", koelsch: "Gaffel", oeffnungszeiten: "Täglich ab 11:30 Uhr geöffnet", info: "Direkt am Bahnhof Deutz." },
-            { name: "Lommerzheim", veedel: "Deutz", adresse: "Siegesstr. 18, Köln", koelsch: "Paffgen", oeffnungszeiten: "Mi-Fr ab 16:00, Sa-So ab 12:00 Uhr (Ruhetag: Mo & Di)", info: "Kult-Laden! Berühmt für das riesige Kotelett ('Lommi')." },
-            { name: "Brauhaus ohne Namen (B.O.N.)", veedel: "Deutz", adresse: "Mathildenstr. 42, Köln", koelsch: "Gaffel", oeffnungszeiten: "Di-So ab 17:00 Uhr (Ruhetag: Montag)", info: "Kreative Brauhausküche mit tollem Veedels-Charme." }
-        ];
+        function filterVeedel(veedel, element) {
+            let cards = document.querySelectorAll('.card');
+            let buttons = document.querySelectorAll('.filter-btn');
 
-        const listContainer = document.getElementById('brauhausList');
-        const filterButtons = document.querySelectorAll('.filter-btn');
+            buttons.forEach(btn => btn.classList.remove('active'));
+            element.classList.add('active');
 
-        function displayBrauhaeusser(filter) {
-            listContainer.innerHTML = '';
-            
-            const filtered = filter === 'alle' 
-                ? brauhaeusser 
-                : brauhaeusser.filter(b => b.veedel === filter);
-
-            filtered.forEach(b => {
-                // Google Maps Link generieren
-                const mapsUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(b.name + ' ' + b.adresse)}`;
-
-                const card = document.createElement('div');
-                card.classList.add('card');
-                card.innerHTML = `
-                    <div class="card-header">
-                        <h3>${b.name}</h3>
-                        <span class="badge">${b.veedel}</span>
-                    </div>
-                    <div class="address-row">
-                        <span class="address">📍 ${b.adresse}</span>
-                        <a href="${mapsUrl}" target="_blank" class="map-btn">🗺️ Route</a>
-                    </div>
-                    <div class="details">
-                        <span>Kölsch:</span> ${b.koelsch}<br>
-                        <span>Öffnungszeiten:</span> <span class="opening-hours">${b.oeffnungszeiten}</span><br>
-                        <span>Besonderheit:</span> ${b.info}
-                    </div>
-                `;
-                listContainer.appendChild(card);
+            cards.forEach(card => {
+                if (veedel === 'alle' || card.getAttribute('data-veedel') === veedel) {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = 'none';
+                }
             });
         }
-
-        // Event Listener für Filter
-        filterButtons.forEach(btn => {
-            btn.addEventListener('click', (e) => {
-                filterButtons.forEach(b => b.classList.remove('active'));
-                e.target.classList.add('active');
-                displayBrauhaeusser(e.target.dataset.veedel);
-            });
-        });
-
-        // Initial alle anzeigen
-        displayBrauhaeusser('alle');
     </script>
-
 </body>
 </html>
